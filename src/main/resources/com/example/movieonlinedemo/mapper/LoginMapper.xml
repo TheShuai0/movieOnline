@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.movieonlinedemo.mapper.LoginMapper">
+    <insert id="register" parameterType="com.example.movieonlinedemo.po.UserPo">
+        INSERT INTO USER(USER_NAME, PASSWORD, USER_ROLE, PHONE_NUMBER)
+        VALUES (#{userName}, #{password}, #{userRole}, #{phoneNumber})
+    </insert>
+    <select id="loginCheck" resultType="java.util.HashMap">
+        SELECT * FROM USER WHERE USER_NAME = #{userName}
+                             and PASSWORD = #{password}
+                             and USER_ROLE = #{userRole}
+    </select>
+
+</mapper>

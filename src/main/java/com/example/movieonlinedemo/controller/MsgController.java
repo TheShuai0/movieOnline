@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin(origins = "*")//注意： *是来自于所有的域名请求
 @RequestMapping("/api/customer")
-public class msgController {
+public class MsgController {
 /*    @Autowired(required = false)
     private CustomerService customerService;*/
 
