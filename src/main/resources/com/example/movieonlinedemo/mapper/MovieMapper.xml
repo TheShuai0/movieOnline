@@ -6,8 +6,29 @@
 <mapper namespace="com.example.movieonlinedemo.mapper.MovieMapper">
 
     <select id="getMovie" resultType="java.util.HashMap">
-        SELECT ID id,NAME name,PIC_URL pic_name,TYPES type FROM MOVIE WHERE DES != '无' order by score desc limit 100
+        SELECT ID id,NAME name,PIC_URL pic_name,TYPES type,Score/2 score
+        FROM MOVIE WHERE DES != '无'
     </select>
+    <select id="getMovieByType" resultType="java.util.HashMap">
+        SELECT ID id,NAME name,PIC_URL pic_name,TYPES type,Score/2 score
+        FROM MOVIE WHERE DES != '无' AND TYPES like CONCAT('%', #{type}, '%')
+    </select>
+    <select id="getMovieType" resultType="java.util.HashMap">
+        SELECT * FROM MOVIE_TYPE
+    </select>
+    <select id="getMovieByName" resultType="java.util.HashMap">
+        SELECT  ID id,NAME name,PIC_URL pic_name,TYPES type,Score/2 score,DES des,
+        FROM MOVIE WHERE DES != '无' AND NAME like CONCAT('%', #{mavieName}, '%')
+    </select>
+    <select id="getMovieDetail" resultType="java.util.HashMap">
+        SELECT ID id,NAME name,PIC_URL pic_url,TYPES types,Score/2 score,
+               ACTORS actors,RELEASE_TIME release_time,DES des,COUNTRY country
+        FROM MOVIE WHERE DES != '无' AND ID = #{movieId}
+    </select>
+    <select id="getMovieUrl" resultType="java.util.HashMap">
+        SELECT * FROM MOVIE_URL WHERE MOVIE_ID = #{movieId}
+    </select>
+
 
 </mapper>
 

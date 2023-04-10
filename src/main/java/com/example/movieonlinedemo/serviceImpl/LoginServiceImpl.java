@@ -48,6 +48,7 @@ public class LoginServiceImpl implements LoginService {
                 System.out.println("设置token:"+token);
                 ValueOperations valueOperations = redisTemplate.opsForValue();
                 valueOperations.set("token", token, 30, TimeUnit.MINUTES);
+                valueOperations.set(token, getUser, 30, TimeUnit.MINUTES);
                 ar.setSuccess(true);
                 ar.setData(token);
             } else {

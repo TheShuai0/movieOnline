@@ -39,7 +39,8 @@ public class LoginInterceptor implements HandlerInterceptor {
                 System.out.println(tokenType);
                 // 如果能够获取到数据，说明token未过期
                 if (tokenType != null || "".equals(tokenType)) {
-                    valueOperations.set(token, tokenType, 30, TimeUnit.MINUTES);
+                    valueOperations.set("token", tokenType, 30, TimeUnit.MINUTES);
+                    valueOperations.set(tokenType, valueOperations.get(tokenType), 30, TimeUnit.MINUTES);
                     return true;
                 }
             }

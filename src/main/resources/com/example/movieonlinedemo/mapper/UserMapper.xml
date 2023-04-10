@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.movieonlinedemo.mapper.UserMapper">
+
+
+    <select id="getUserData" resultType="java.util.HashMap">
+        SELECT * FROM USER WHERE user_name = #{userName}
+    </select>
+    <select id="getUserDetail" resultType="java.util.HashMap">
+        SELECT id,name,phone_number phone,email,user_age age,user_hobby hobby,user_img pic_name,
+               hobby_id,user_role,user_des des FROM USER WHERE user_name = #{userName}
+    </select>
+    <select id="getUserCollect" resultType="java.util.HashMap">
+        SELECT T2.ID id,T2.NAME name,T2.PIC_URL pic_url,T2.TYPES types,T2.Score/2 score
+               FROM USER_COLLECT T1
+            LEFT JOIN MOVIE T2 ON T1.MOVIE_ID = T2.ID
+            WHERE T1.USER_ID = #{id} order by T1.INSERT_TIME
+    </select>
+</mapper>

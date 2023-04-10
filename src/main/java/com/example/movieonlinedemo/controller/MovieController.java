@@ -14,10 +14,43 @@ import javax.servlet.http.HttpServletRequest;
 public class MovieController {
     @Autowired
     private MovieService movieService;
-    @RequestMapping(value = "/local/getMovie", method = RequestMethod.POST)
+    @RequestMapping(value = "/movie/getMovie", method = RequestMethod.POST)
     public @ResponseBody
     ActionResult getMovie(HttpServletRequest request){
-        System.out.println("123456"+movieService.getMovie());
         return movieService.getMovie();
     }
+
+    @RequestMapping(value = "/movie/getMovieByType", method = RequestMethod.POST)
+    public @ResponseBody
+    ActionResult getMovieByType(HttpServletRequest request){
+        String type = request.getParameter("type");
+        return movieService.getMovieByType(type);
+    }
+
+    @RequestMapping(value = "/movie/getMovieByName", method = RequestMethod.POST)
+    public @ResponseBody
+    ActionResult getMovieByName(HttpServletRequest request){
+        String movieName = request.getParameter("movieName");
+        return movieService.getMovieByName(movieName);
+    }
+    @RequestMapping(value = "/movie/getMovieType", method = RequestMethod.POST)
+    public @ResponseBody
+    ActionResult getMovieType(HttpServletRequest request){
+        return movieService.getMovieType();
+    }
+
+    @RequestMapping(value = "/movie/getMovieDetail", method = RequestMethod.POST)
+    public @ResponseBody
+    ActionResult getMovieDetail(HttpServletRequest request){
+        String movieId = request.getParameter("movieId");
+        return movieService.getMovieDetail(movieId);
+    }
+
+    @RequestMapping(value = "/movie/getMovieUrl", method = RequestMethod.POST)
+    public @ResponseBody
+    ActionResult getMovieUrl(HttpServletRequest request){
+        String movieId = request.getParameter("movieId");
+        return movieService.getMovieUrl(movieId);
+    }
+
 }
