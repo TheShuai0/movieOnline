@@ -16,4 +16,10 @@ public interface MovieMapper {
     HashMap<String,Object> getMovieDetail(String movieId);
 
     List<HashMap<Object,Object>> getMovieUrl(String movieId);
+
+    List<HashMap<Object,Object>> getMovieRankByCollect(String type);
+
+    List<HashMap<Object,Object>> getMovieRankByWatch(String type);
+
+    List<HashMap<Object,Object>> getMovieRankByScore(String type);
 }

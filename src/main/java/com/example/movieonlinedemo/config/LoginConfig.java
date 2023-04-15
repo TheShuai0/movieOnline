@@ -18,7 +18,6 @@ public class LoginConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        System.out.println("got there");
         // 添加拦截器
         registry.addInterceptor(loginInterceptor)
                 // 要拦截的请求（所有请求）

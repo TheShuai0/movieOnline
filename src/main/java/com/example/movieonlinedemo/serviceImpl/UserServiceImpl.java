@@ -48,4 +48,80 @@ public class UserServiceImpl implements UserService {
 
         return ar;
     }
+
+    @Override
+    public ActionResult addCollect(String token, String movieId) {
+        ValueOperations<String, Object> valueOperations = redisTemplate.opsForValue();
+        HashMap<String,Object> user = (HashMap) valueOperations.get(token);
+        userMapper.addCollect((Integer)user.get("ID"),movieId);
+        return null;
+    }
+
+    @Override
+    public ActionResult deleteCollect(String token, String movieId) {
+        ValueOperations<String, Object> valueOperations = redisTemplate.opsForValue();
+        HashMap<String,Object> user = (HashMap) valueOperations.get(token);
+        userMapper.deleteCollect((Integer)user.get("ID"),movieId);
+        return null;
+    }
+
+    @Override
+    public ActionResult getCollectStatus(String token, String movieId) {
+        ActionResult ar = new ActionResult();
+        ValueOperations<String, Object> valueOperations = redisTemplate.opsForValue();
+        HashMap<String,Object> user = (HashMap) valueOperations.get(token);
+        HashMap<Object,Object> collect = userMapper.getCollectStatus((Integer)user.get("ID"),movieId);
+        if(collect == null || collect.equals("")){
+            ar.setData("false");
+        }else {
+            ar.setData("true");
+        }
+        return ar;
+    }
+
+    @Override
+    public ActionResult updateDes(String token, String des) {
+        ActionResult ar = new ActionResult();
+        ValueOperations<String, Object> valueOperations = redisTemplate.opsForValue();
+        HashMap<String,Object> user = (HashMap) valueOperations.get(token);
+        userMapper.updateDes((Integer)user.get("ID"),des);
+        return null;
+    }
+
+    @Override
+    public ActionResult addUserScore(String token, String movieId,String userScore) {
+        ValueOperations<String, Object> valueOperations = redisTemplate.opsForValue();
+        HashMap<String,Object> user = (HashMap) valueOperations.get(token);
+        userMapper.addUserScore((Integer)user.get("ID"),movieId,userScore);
+        return null;
+    }
+
+    @Override
+    public ActionResult addHistory(String token, String movieId) {
+        ValueOperations<String, Object> valueOperations = redisTemplate.opsForValue();
+        HashMap<String,Object> user = (HashMap) valueOperations.get(token);
+        if(userMapper.getHistory((Integer)user.get("ID"),movieId)!=null){
+            userMapper.updateHistory((Integer)user.get("ID"),movieId);
+        }else {
+            userMapper.addHistory((Integer) user.get("ID"), movieId);
+        }
+        return null;
+    }
+
+    @Override
+    public ActionResult getScore(String token, String movieId) {
+        ActionResult ar = new ActionResult();
+        ValueOperations<String, Object> valueOperations = redisTemplate.opsForValue();
+        HashMap<String,Object> user = (HashMap) valueOperations.get(token);
+        ar.setData(userMapper.getScore((Integer) user.get("ID"), movieId));
+        return ar;
+    }
+
+    @Override
+    public ActionResult changeUserInfo(String userId, String age, String email, String phone) {
+        userMapper.changeUserInfo(userId,age,email,phone);
+        return null;
+    }
+
+
 }

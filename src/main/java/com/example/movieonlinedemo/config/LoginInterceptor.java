@@ -31,7 +31,7 @@ public class LoginInterceptor implements HandlerInterceptor {
             // 从请求头里面获取token,因为每次都会在请求头里面携带token
             System.out.println(request.getRequestURI());
             String token = request.getHeader("token");
-            System.out.println("tokennnnnnnn:" + token);
+            System.out.println("token:" + token);
             if (token != null && !"".equals(token)) {
                 //根据head中的token，查询redis中是否有数据
                 ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();

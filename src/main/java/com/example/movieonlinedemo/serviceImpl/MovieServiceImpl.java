@@ -6,6 +6,9 @@ import com.teradata.ec.common.model.ActionResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class MovieServiceImpl implements MovieService {
 
@@ -49,6 +52,19 @@ public class MovieServiceImpl implements MovieService {
     public ActionResult getMovieUrl(String movieId) {
         ActionResult ar = new ActionResult();
         ar.setData(movieMapper.getMovieUrl(movieId));
+        return ar;
+    }
+
+    @Override
+    public ActionResult getMovieRank(String type, String how) {
+        ActionResult ar = new ActionResult();
+        List list = new ArrayList<Object>();
+        if(type == null || type.equals("全部"))
+            type = "";
+        list.add(movieMapper.getMovieRankByCollect(type));
+        list.add(movieMapper.getMovieRankByWatch(type));
+        list.add(movieMapper.getMovieRankByScore(type));
+        ar.setData(list);
         return ar;
     }
 }

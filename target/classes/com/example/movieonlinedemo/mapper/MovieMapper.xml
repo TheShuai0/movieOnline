@@ -6,27 +6,36 @@
 <mapper namespace="com.example.movieonlinedemo.mapper.MovieMapper">
 
     <select id="getMovie" resultType="java.util.HashMap">
-        SELECT ID id,NAME name,PIC_URL pic_name,TYPES type,Score/2 score
+        SELECT ID id,NAME name,PIC_URL pic_name,TYPES type,Score score
         FROM MOVIE WHERE DES != '无'
     </select>
     <select id="getMovieByType" resultType="java.util.HashMap">
-        SELECT ID id,NAME name,PIC_URL pic_name,TYPES type,Score/2 score
+        SELECT ID id,NAME name,PIC_URL pic_name,TYPES type,Score score
         FROM MOVIE WHERE DES != '无' AND TYPES like CONCAT('%', #{type}, '%')
     </select>
     <select id="getMovieType" resultType="java.util.HashMap">
         SELECT * FROM MOVIE_TYPE
     </select>
     <select id="getMovieByName" resultType="java.util.HashMap">
-        SELECT  ID id,NAME name,PIC_URL pic_name,TYPES type,Score/2 score,DES des,
+        SELECT  ID id,NAME name,PIC_URL pic_name,TYPES type,Score score,DES des
         FROM MOVIE WHERE DES != '无' AND NAME like CONCAT('%', #{mavieName}, '%')
     </select>
     <select id="getMovieDetail" resultType="java.util.HashMap">
-        SELECT ID id,NAME name,PIC_URL pic_url,TYPES types,Score/2 score,
+        SELECT ID id,NAME name,PIC_URL pic_url,TYPES types,Score score,
                ACTORS actors,RELEASE_TIME release_time,DES des,COUNTRY country
         FROM MOVIE WHERE DES != '无' AND ID = #{movieId}
     </select>
     <select id="getMovieUrl" resultType="java.util.HashMap">
         SELECT * FROM MOVIE_URL WHERE MOVIE_ID = #{movieId}
+    </select>
+    <select id="getMovieRankByCollect" resultType="java.util.HashMap">
+        select * from movie where DES != '无' and  TYPES like CONCAT('%', #{type}, '%')  order by collect desc limit 30
+    </select>
+    <select id="getMovieRankByWatch" resultType="java.util.HashMap">
+        select * from movie where DES != '无' and  TYPES like CONCAT('%', #{type}, '%') order by watch desc limit 30
+    </select>
+    <select id="getMovieRankByScore" resultType="java.util.HashMap">
+        select * from movie where INSERT_TIME DES != '无' and TYPES like CONCAT('%', #{type}, '%') order by Score desc limit 30
     </select>
 
 

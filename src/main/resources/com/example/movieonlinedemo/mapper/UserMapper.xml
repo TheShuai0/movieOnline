@@ -4,6 +4,28 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.movieonlinedemo.mapper.UserMapper">
+    <insert id="addCollect">
+        INSERT INTO USER_COLLECT(USER_ID,INSERT_TIME,MOVIE_ID) VALUES (#{id},NOW(),#{movieId})
+    </insert>
+    <insert id="addHistory">
+        INSERT INTO MOVIE_HISTORY(USER_ID,INSERT_TIME,MOVIE_ID,USER_SCORE) VALUES (#{id},NOW(),#{movieId},0)
+    </insert>
+    <update id="addUserScore">
+        UPDATE movie_history SET USER_SCORE = #{userScore} WHERE id = #{id} and MOVIE_ID =#{movieId}
+    </update>
+    <update id="updateDes">
+        UPDATE USER SET USER_DES = #{des} WHERE id = #{id}
+    </update>
+    <update id="updateHistory">
+        update MOVIE_HISTORY set INSERT_TIME = NOW() WHERE id = #{id} and MOVIE_ID =#{movieId}
+    </update>
+    <update id="changeUserInfo">
+        update user set PHONE_NUMBER=#{phone},EMAIL=#{email},USER_AGE=#{age}  where ID = #{userId}
+    </update>
+
+    <delete id="deleteCollect">
+        DELETE FROM USER_COLLECT WHERE USER_ID = #{id} AND MOVIE_ID = #{movieId}
+    </delete>
 
 
     <select id="getUserData" resultType="java.util.HashMap">
@@ -14,9 +36,18 @@
                hobby_id,user_role,user_des des FROM USER WHERE user_name = #{userName}
     </select>
     <select id="getUserCollect" resultType="java.util.HashMap">
-        SELECT T2.ID id,T2.NAME name,T2.PIC_URL pic_url,T2.TYPES types,T2.Score/2 score
+        SELECT T2.ID id,T2.NAME name,T2.PIC_URL pic_name,T2.TYPES types,T2.Score score
                FROM USER_COLLECT T1
             LEFT JOIN MOVIE T2 ON T1.MOVIE_ID = T2.ID
             WHERE T1.USER_ID = #{id} order by T1.INSERT_TIME
+    </select>
+    <select id="getCollectStatus" resultType="java.util.HashMap">
+        SELECT * FROM USER_COLLECT WHERE USER_ID = #{id} AND MOVIE_ID = #{movieId}
+    </select>
+    <select id="getHistory" resultType="java.util.HashMap">
+        SELECT * FROM movie_history WHERE USER_ID = #{id} AND MOVIE_ID = #{movieId}
+    </select>
+    <select id="getScore" resultType="java.lang.Float">
+        SELECT USER_SCORE FROM movie_history WHERE USER_ID = #{id} AND MOVIE_ID = #{movieId}
     </select>
 </mapper>

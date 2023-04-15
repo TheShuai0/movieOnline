@@ -14,4 +14,6 @@ public interface  MovieService {
 
     ActionResult getMovieDetail(String movieId);
     ActionResult getMovieUrl(String movieId);
+
+    ActionResult getMovieRank(String type, String how);
 }

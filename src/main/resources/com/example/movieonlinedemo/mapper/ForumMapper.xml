@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.movieonlinedemo.mapper.ForumMapper">
+    <insert id="addReply">
+        insert into forum_reply(REPLY_USER_ID,TOPIC_USER_ID,FORUM_ID,INSERT_TIME,CONTENT)
+                        VALUES(#{userId},#{topicId},#{forumId},NOW(),#{content})
+    </insert>
+
+    <insert id="addGoodStatus">
+        insert into forum_good(forum_id,user_id,status ,update_time)values (#{forumId},#{userId},1,NOW())
+    </insert>
+    <insert id="addGood">
+        UPDATE forum SET good = (good + 1) WHERE id = #{forumId};
+    </insert>
+    <insert id="addForum">
+        insert into forum(USER_ID,INSERT_TIME,FORUM_NAME,FORUM_DES,FORUM_CONTENT) values (#{userId},NOW(),#{name},#{des},#{content})
+    </insert>
+    <update id="addForumReply">
+        UPDATE forum SET REPLY_NUMBER = (REPLY_NUMBER + 1) WHERE id = #{forumId};
+    </update>
+    <update id="reduceGood">
+        UPDATE forum SET good = (good - 1) WHERE id = #{forumId};
+    </update>
+    <update id="upGoodStatus">
+        update forum_good set status = 1 where forum_id = #{forumId} and user_id = #{userId}
+    </update>
+    <update id="downGoodStatus">
+        update forum_good set status = 0 where forum_id = #{forumId} and user_id = #{userId}
+    </update>
+
+    <select id="getAllForum" resultType="java.util.HashMap">
+        SELECT * FROM FORUM
+    </select>
+    <select id="getForumByTimeAsc" resultType="java.util.HashMap">
+        SELECT * FROM FORUM order by insert_time
+    </select>
+    <select id="getForumByTimeDesc" resultType="java.util.HashMap">
+        SELECT * FROM FORUM order by insert_time desc
+    </select>
+
+    <select id="getForumByReplyAsc" resultType="java.util.HashMap">
+        SELECT * FROM FORUM order by reply_number
+    </select>
+
+    <select id="getForumByReplyDesc" resultType="java.util.HashMap">
+        SELECT * FROM FORUM order by reply_number desc
+    </select>
+    <select id="getMyForum" resultType="java.util.HashMap">
+        SELECT * FROM FORUM where USER_ID = #{id} order by insert_time desc
+    </select>
+    <select id="searchForum" resultType="java.util.HashMap">
+        SELECT * FROM FORUM WHERE
+                FORUM_NAME like CONCAT('%', #{searchForum}, '%')
+                OR FORUM_DES like CONCAT('%', #{searchForum}, '%')
+                OR FORUM_CONTENT like CONCAT('%', #{searchForum}, '%')
+                ORDER BY INSERT_TIME DESC
+    </select>
+    <select id="getForumReply" resultType="java.util.HashMap">
+        SELECT T1.*,T3.NAME REPLY_USER_NAME,T4.NAME TOPIC_USER_NAME FROM forum_reply T1
+                                             LEFT JOIN forum T2 ON T1.FORUM_ID = T2.ID
+                                             LEFT JOIN user T3 ON T1.REPLY_USER_ID = T3.ID
+                                             LEFT JOIN user T4 ON T1.TOPIC_USER_ID = T4.ID
+        WHERE T1.FORUM_ID = #{forumId}
+    </select>
+    <select id="getForumUser" resultType="java.util.HashMap">
+        select t1.*,t2.NAME,t2.USER_IMG  from forum t1
+                                                  left join user t2 on t1.USER_ID = t2.ID
+        where t1.ID = #{forumId}
+    </select>
+    <select id="getForumstatus" resultType="java.util.HashMap">
+        select status from forum_good  where user_id = #{userId} and forum_Id = #{forumId}
+    </select>
+    <select id="searchForumReply" resultType="java.util.HashMap">
+        SELECT T1.*,T3.NAME REPLY_USER_NAME,T4.NAME TOPIC_USER_NAME FROM forum_reply T1
+         LEFT JOIN forum T2 ON T1.FORUM_ID = T2.ID
+         LEFT JOIN user T3 ON T1.REPLY_USER_ID = T3.ID
+         LEFT JOIN user T4 ON T1.TOPIC_USER_ID = T4.ID
+        WHERE T1.FORUM_ID = #{forumId} and t3.name like CONCAT('%', #{searchForum}, '%')
+        or t1.content like CONCAT('%', #{searchForum}, '%')
+    </select>
+    <select id="getForumReplyByReplyDesc" resultType="java.util.HashMap">
+        SELECT T1.*,T3.NAME REPLY_USER_NAME,T4.NAME TOPIC_USER_NAME FROM forum_reply T1
+                                                                             LEFT JOIN forum T2 ON T1.FORUM_ID = T2.ID
+                                                                             LEFT JOIN user T3 ON T1.REPLY_USER_ID = T3.ID
+                                                                             LEFT JOIN user T4 ON T1.TOPIC_USER_ID = T4.ID
+        WHERE T1.FORUM_ID = #{forumId} order by t1.insert_time desc
+    </select>
+    <select id="getForumReplyByReplyAsc" resultType="java.util.HashMap">
+        SELECT T1.*,T3.NAME REPLY_USER_NAME,T4.NAME TOPIC_USER_NAME FROM forum_reply T1
+                                                                             LEFT JOIN forum T2 ON T1.FORUM_ID = T2.ID
+                                                                             LEFT JOIN user T3 ON T1.REPLY_USER_ID = T3.ID
+                                                                             LEFT JOIN user T4 ON T1.TOPIC_USER_ID = T4.ID
+        WHERE T1.FORUM_ID = #{forumId} order by t1.insert_time Asc
+    </select>
+    <select id="getForumReplyByTimeDesc" resultType="java.util.HashMap">
+        SELECT T1.*,T3.NAME REPLY_USER_NAME,T4.NAME TOPIC_USER_NAME FROM forum_reply T1
+                                                                             LEFT JOIN forum T2 ON T1.FORUM_ID = T2.ID
+                                                                             LEFT JOIN user T3 ON T1.REPLY_USER_ID = T3.ID
+                                                                             LEFT JOIN user T4 ON T1.TOPIC_USER_ID = T4.ID
+        WHERE T1.FORUM_ID = #{forumId} order by t1.good desc
+    </select>
+    <select id="getForumReplyByTimeAsc" resultType="java.util.HashMap">
+        SELECT T1.*,T3.NAME REPLY_USER_NAME,T4.NAME TOPIC_USER_NAME FROM forum_reply T1
+                                                                             LEFT JOIN forum T2 ON T1.FORUM_ID = T2.ID
+                                                                             LEFT JOIN user T3 ON T1.REPLY_USER_ID = T3.ID
+                                                                             LEFT JOIN user T4 ON T1.TOPIC_USER_ID = T4.ID
+        WHERE T1.FORUM_ID = #{forumId} order by t1.good asc
+    </select>
+
+</mapper>
+
+

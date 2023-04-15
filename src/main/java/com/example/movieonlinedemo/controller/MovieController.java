@@ -53,4 +53,11 @@ public class MovieController {
         return movieService.getMovieUrl(movieId);
     }
 
+    @RequestMapping(value = "/movie/getMovieRank", method = RequestMethod.POST)
+    public @ResponseBody
+    ActionResult getMovieRank(HttpServletRequest request){
+        String type = request.getParameter("type");
+        String how = request.getParameter("how");
+        return movieService.getMovieRank(type,how);
+    }
 }

@@ -11,5 +11,25 @@ public interface UserMapper {
 
     HashMap<String,Object> getUserData(String userName);
     HashMap<String,Object> getUserDetail(String userName);
-    List<HashMap<String,Object>> getUserCollect(Integer id);
+    List<HashMap<Object,Object>> getUserCollect(Integer id);
+
+    void addCollect(Integer id, String movieId);
+
+    void deleteCollect(Integer id, String movieId);
+
+    HashMap<Object, Object> getCollectStatus(Integer id, String movieId);
+
+    void updateDes(Integer id, String des);
+
+    void addUserScore(Integer id, String movieId,String userScore);
+
+    void addHistory(Integer id, String movieId);
+
+    HashMap<Object, Object> getHistory(Integer id, String movieId);
+
+    void updateHistory(Integer id, String movieId);
+
+    Float getScore(Integer id, String movieId);
+
+    void changeUserInfo(String userId, String age, String email, String phone);
 }
