@@ -23,4 +23,9 @@ public interface UserService {
     ActionResult getScore(String token, String movieId);
 
     ActionResult changeUserInfo(String userId, String age, String email, String phone);
+
+    ActionResult getMovieHistory(String token);
+
+    void updatePic(String fileName);
+
 }

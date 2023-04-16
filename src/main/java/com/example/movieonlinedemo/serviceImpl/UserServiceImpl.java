@@ -92,7 +92,7 @@ public class UserServiceImpl implements UserService {
     public ActionResult addUserScore(String token, String movieId,String userScore) {
         ValueOperations<String, Object> valueOperations = redisTemplate.opsForValue();
         HashMap<String,Object> user = (HashMap) valueOperations.get(token);
-        userMapper.addUserScore((Integer)user.get("ID"),movieId,userScore);
+        userMapper.addUserScore((Integer)user.get("ID"),movieId,Float.parseFloat(userScore) );
         return null;
     }
 
@@ -122,6 +122,21 @@ public class UserServiceImpl implements UserService {
         userMapper.changeUserInfo(userId,age,email,phone);
         return null;
     }
+
+    @Override
+    public ActionResult getMovieHistory(String token) {
+        ActionResult ar = new ActionResult();
+        ValueOperations<String, Object> valueOperations = redisTemplate.opsForValue();
+        HashMap<String,Object> user = (HashMap) valueOperations.get(token);
+        ar.setData(userMapper.getMovieHistory((Integer) user.get("ID")));
+        return ar;
+    }
+
+    @Override
+    public void updatePic(String fileName) {
+        userMapper.updatePic(fileName,1);
+    }
+
 
 
 }

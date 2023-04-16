@@ -4,7 +4,7 @@ import com.teradata.ec.common.model.ActionResult;
 
 public interface  MovieService {
     ActionResult getMovie();
-
+    ActionResult getAllMovie(String page);
     ActionResult getMovieByType(String type);
 
     ActionResult getMovieByName(String type);
@@ -16,4 +16,8 @@ public interface  MovieService {
     ActionResult getMovieUrl(String movieId);
 
     ActionResult getMovieRank(String type, String how);
+
+    ActionResult deleteMovie(String movieId);
+
+    ActionResult usePython();
 }

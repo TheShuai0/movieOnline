@@ -117,4 +117,25 @@ public class ForumController {
         return forumService.getForumReplyByTime(forumId,judgeTime);
     }
 
+    @RequestMapping(value = "/forum/getForumApply", method = RequestMethod.POST)
+    public @ResponseBody
+    ActionResult getForumApply(HttpServletRequest request){
+        String page = request.getParameter("page");
+        return forumService.getForumApply(page);
+    }
+
+    @RequestMapping(value = "/forum/okForumApply", method = RequestMethod.POST)
+    public @ResponseBody
+    ActionResult okForumApply(HttpServletRequest request){
+        String forumId = request.getParameter("applyId");
+        return forumService.okForumApply(forumId);
+    }
+
+    @RequestMapping(value = "/forum/deleteForumApply", method = RequestMethod.POST)
+    public @ResponseBody
+    ActionResult deleteForumApply(HttpServletRequest request){
+        String forumId = request.getParameter("applyId");
+        return forumService.deleteForumApply(forumId);
+    }
+
 }

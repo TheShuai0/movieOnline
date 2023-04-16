@@ -32,4 +32,10 @@ public interface ForumService {
     ActionResult getForumReplyByReply(String forumId, String judgeNumber);
 
     ActionResult getForumReplyByTime(String forumId, String judgeTime);
+
+    ActionResult getForumApply(String page);
+
+    ActionResult okForumApply(String forumId);
+
+    ActionResult deleteForumApply(String forumId);
 }

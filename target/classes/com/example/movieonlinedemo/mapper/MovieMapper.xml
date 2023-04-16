@@ -4,6 +4,12 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.movieonlinedemo.mapper.MovieMapper">
+    <delete id="deleteMovie">
+        delete from movie where id = #{movieId}
+    </delete>
+    <select id="getAllMovie" resultType="java.util.HashMap">
+        SELECT * FROM MOVIE WHERE DES != '无' LIMIT #{offset}, #{limit}
+    </select>
 
     <select id="getMovie" resultType="java.util.HashMap">
         SELECT ID id,NAME name,PIC_URL pic_name,TYPES type,Score score
@@ -29,13 +35,25 @@
         SELECT * FROM MOVIE_URL WHERE MOVIE_ID = #{movieId}
     </select>
     <select id="getMovieRankByCollect" resultType="java.util.HashMap">
-        select * from movie where DES != '无' and  TYPES like CONCAT('%', #{type}, '%')  order by collect desc limit 30
+        select * from movie where DES != '无' and  TYPES like CONCAT('%', #{type}, '%')  order by COLLECT desc limit 30
     </select>
     <select id="getMovieRankByWatch" resultType="java.util.HashMap">
-        select * from movie where DES != '无' and  TYPES like CONCAT('%', #{type}, '%') order by watch desc limit 30
+        select * from movie where DES != '无' and  TYPES like CONCAT('%', #{type}, '%') order by WATCH desc limit 30
     </select>
     <select id="getMovieRankByScore" resultType="java.util.HashMap">
-        select * from movie where INSERT_TIME DES != '无' and TYPES like CONCAT('%', #{type}, '%') order by Score desc limit 30
+        select * from movie where  DES != '无' and TYPES like CONCAT('%', #{type}, '%') order by SCORE desc limit 30
+    </select>
+    <select id="getMovieNumber" resultType="java.lang.Integer">
+        select sum(id) from movie where DES != '无'
+    </select>
+    <select id="getHisTJMovie" resultType="java.util.HashMap">
+        SELECT * FROM movie_history WHERE USER_ID = #{userId}
+    </select>
+    <select id="getTJMovie" resultType="java.util.HashMap">
+        SELECT * FROM movie WHERE DES != '无'
+    </select>
+    <select id="getMovieById" resultType="java.util.HashMap">
+        SELECT * FROM movie WHERE DES != '无' and id = #{movieId}
     </select>
 
 

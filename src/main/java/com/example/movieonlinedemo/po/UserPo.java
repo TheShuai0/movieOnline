@@ -1,7 +1,6 @@
 package com.example.movieonlinedemo.po;
 
 import lombok.Data;
-import org.springframework.context.annotation.Bean;
 
 @Data
 public class UserPo {

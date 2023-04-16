@@ -154,4 +154,23 @@ public class ForumServiceImpl implements ForumService {
 
         return ar;
     }
+
+    @Override
+    public ActionResult getForumApply(String page) {
+        ActionResult ar = new ActionResult();
+        ar.setData(forumMapper.getForumApply(Integer.parseInt(page)*10,10));
+        return ar;
+    }
+
+    @Override
+    public ActionResult okForumApply(String forumId) {
+        forumMapper.okApply(forumId);
+        return null;
+    }
+
+    @Override
+    public ActionResult deleteForumApply(String forumId) {
+        forumMapper.deleteApply(forumId);
+        return null;
+    }
 }

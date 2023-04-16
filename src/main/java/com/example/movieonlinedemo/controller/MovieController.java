@@ -19,6 +19,20 @@ public class MovieController {
     ActionResult getMovie(HttpServletRequest request){
         return movieService.getMovie();
     }
+    @RequestMapping(value = "/movie/getAllMovie", method = RequestMethod.POST)
+    public @ResponseBody
+    ActionResult getAllMovie(HttpServletRequest request){
+        String page = request.getParameter("page");
+        return movieService.getAllMovie(page);
+    }
+
+    @RequestMapping(value = "/movie/deleteMovie", method = RequestMethod.POST)
+    public @ResponseBody
+    ActionResult deleteMovie(HttpServletRequest request){
+        String movieId = request.getParameter("movieId");
+        return movieService.deleteMovie(movieId);
+    }
+
 
     @RequestMapping(value = "/movie/getMovieByType", method = RequestMethod.POST)
     public @ResponseBody
@@ -59,5 +73,11 @@ public class MovieController {
         String type = request.getParameter("type");
         String how = request.getParameter("how");
         return movieService.getMovieRank(type,how);
+    }
+
+    @RequestMapping(value = "/movie/usePython", method = RequestMethod.POST)
+    public @ResponseBody
+    ActionResult userPython(HttpServletRequest request){
+        return movieService.usePython();
     }
 }

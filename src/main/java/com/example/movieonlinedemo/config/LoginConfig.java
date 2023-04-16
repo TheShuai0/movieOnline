@@ -14,7 +14,8 @@ public class LoginConfig implements WebMvcConfigurer {
     //不拦截的请求
     String[] excludePatterns = {
             "/local/login",
-            "/local/register"};
+            "/local/register",
+            "/user/updatePic"};
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

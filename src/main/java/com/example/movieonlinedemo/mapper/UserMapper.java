@@ -21,7 +21,7 @@ public interface UserMapper {
 
     void updateDes(Integer id, String des);
 
-    void addUserScore(Integer id, String movieId,String userScore);
+    void addUserScore(Integer userId, String movieId,Float userScore);
 
     void addHistory(Integer id, String movieId);
 
@@ -32,4 +32,8 @@ public interface UserMapper {
     Float getScore(Integer id, String movieId);
 
     void changeUserInfo(String userId, String age, String email, String phone);
+
+    List<HashMap<Object,Object>> getMovieHistory(Integer id);
+
+    void updatePic(String fileName, int id);
 }

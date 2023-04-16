@@ -11,7 +11,7 @@
         INSERT INTO MOVIE_HISTORY(USER_ID,INSERT_TIME,MOVIE_ID,USER_SCORE) VALUES (#{id},NOW(),#{movieId},0)
     </insert>
     <update id="addUserScore">
-        UPDATE movie_history SET USER_SCORE = #{userScore} WHERE id = #{id} and MOVIE_ID =#{movieId}
+        UPDATE movie_history SET USER_SCORE = #{userScore} WHERE USER_ID = #{userId} and MOVIE_ID =#{movieId}
     </update>
     <update id="updateDes">
         UPDATE USER SET USER_DES = #{des} WHERE id = #{id}
@@ -21,6 +21,9 @@
     </update>
     <update id="changeUserInfo">
         update user set PHONE_NUMBER=#{phone},EMAIL=#{email},USER_AGE=#{age}  where ID = #{userId}
+    </update>
+    <update id="updatePic">
+        update user set USER_IMG = #{fileName} WHERE ID = #{id}
     </update>
 
     <delete id="deleteCollect">
@@ -49,5 +52,10 @@
     </select>
     <select id="getScore" resultType="java.lang.Float">
         SELECT USER_SCORE FROM movie_history WHERE USER_ID = #{id} AND MOVIE_ID = #{movieId}
+    </select>
+    <select id="getMovieHistory" resultType="java.util.HashMap">
+        select t1.*,T2.id movieId,t2.NAME movieName,t2.PIC_URL pic_url from movie_history t1
+            left join movie t2 on t1.MOVIE_ID = T2.id
+            where t1.USER_ID = #{id} order by INSERT_TIME DESC
     </select>
 </mapper>

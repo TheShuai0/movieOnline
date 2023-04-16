@@ -49,4 +49,10 @@ public interface ForumMapper {
     List<HashMap<Object,Object>> getForumReplyByTimeDesc(String forumId);
 
     List<HashMap<Object,Object>> getForumReplyByTimeAsc(String forumId);
+
+    List<HashMap<Object,Object>> getForumApply(int offset,int limit);
+
+    void deleteApply(String applyId);
+
+    void okApply(String forumId);
 }

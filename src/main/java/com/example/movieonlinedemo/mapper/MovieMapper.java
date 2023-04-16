@@ -7,7 +7,11 @@ import java.util.List;
 
 @Mapper
 public interface MovieMapper {
+
+    List<HashMap<Object,Object>> getTJMovie();
+    List<HashMap<Object,Object>> getHisTJMovie(int userId);
     List<HashMap<Object,Object>> getMovie();
+    List<HashMap<Object,Object>> getAllMovie(int offset,int limit);
 
     List<HashMap<Object,Object>> getMovieByType(String type);
     List<HashMap<Object,Object>> getMovieByName(String movieName);
@@ -22,4 +26,10 @@ public interface MovieMapper {
     List<HashMap<Object,Object>> getMovieRankByWatch(String type);
 
     List<HashMap<Object,Object>> getMovieRankByScore(String type);
+
+    void deleteMovie(String movieId);
+
+    int getMovieNumber();
+
+    HashMap<Object, Object> getMovieById(int movieId);
 }

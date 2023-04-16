@@ -31,6 +31,7 @@
         update forum_good set status = 0 where forum_id = #{forumId} and user_id = #{userId}
     </update>
 
+
     <select id="getAllForum" resultType="java.util.HashMap">
         SELECT * FROM FORUM
     </select>
@@ -109,7 +110,16 @@
                                                                              LEFT JOIN user T4 ON T1.TOPIC_USER_ID = T4.ID
         WHERE T1.FORUM_ID = #{forumId} order by t1.good asc
     </select>
-
+    <select id="getForumApply" resultType="java.util.HashMap">
+        select T2.*,T1.USER_NAME userName  from user T1 left join forum_apply T2 on T1.ID = T2.USER_ID
+        where states = 1 LIMIT #{offset}, #{limit}
+    </select>
+    <update id="deleteApply">
+        update forum_apply set states = 0 where id = #{applyId}
+    </update>
+    <update id="okApply">
+        update forum_apply set states = 2 where id = #{applyId}
+    </update>
 </mapper>
 
 
